@@ -29,14 +29,18 @@ export function ListaPrioridades() {
 
   // Carregar prioridades do dia atual
   useEffect(() => {
-    const prioridadesDoDia = getHistoricoPorData(dataAtual)
-    setPrioridadesExibidas(prioridadesDoDia)
+    if (getHistoricoPorData) {
+      const prioridadesDoDia = getHistoricoPorData(dataAtual) || []
+      setPrioridadesExibidas(prioridadesDoDia)
+    }
   }, [prioridades, dataAtual, getHistoricoPorData])
 
   // Carregar datas disponíveis no histórico
   useEffect(() => {
-    const datas = getDatasPrioridades()
-    setDatasHistorico(datas)
+    if (getDatasPrioridades) {
+      const datas = getDatasPrioridades() || []
+      setDatasHistorico(datas)
+    }
   }, [prioridades, getDatasPrioridades])
 
   // Verifica se estamos vendo o dia atual
