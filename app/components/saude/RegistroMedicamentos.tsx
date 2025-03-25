@@ -66,7 +66,7 @@ export function RegistroMedicamentos() {
     })
     
     resetForm()
-  }, [adicionarMedicamento, novoMedicamento])
+  }, [adicionarMedicamento, novoMedicamento, resetForm])
 
   const iniciarEdicao = useCallback((id: string) => {
     const medicamento = medicamentos.find(med => med.id === id);
@@ -107,7 +107,7 @@ export function RegistroMedicamentos() {
     })
     
     resetForm()
-  }, [atualizarMedicamento, editandoId, novoMedicamento])
+  }, [atualizarMedicamento, editandoId, novoMedicamento, resetForm])
 
   const adicionarHorario = useCallback(() => {
     if (!novoHorario) return

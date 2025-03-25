@@ -55,7 +55,7 @@ export function MonitoramentoHumor() {
     })
     
     resetForm()
-  }, [adicionarRegistroHumor, novoRegistro])
+  }, [adicionarRegistroHumor, novoRegistro, resetForm])
 
   const iniciarEdicao = useCallback((registro: typeof registrosHumor[0]) => {
     setEditandoId(registro.id)
@@ -82,7 +82,7 @@ export function MonitoramentoHumor() {
     })
     
     resetForm()
-  }, [atualizarRegistroHumor, editandoId, novoRegistro])
+  }, [atualizarRegistroHumor, editandoId, novoRegistro, resetForm])
 
   const adicionarFator = useCallback(() => {
     if (!novoFator) return

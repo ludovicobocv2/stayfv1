@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useRef } from 'react'
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { createClient } from '@/app/lib/supabase'
 
 interface SupabaseContextType {
   supabase: SupabaseClient
@@ -8,10 +9,7 @@ interface SupabaseContextType {
 const SupabaseContext = createContext<SupabaseContextType | undefined>(undefined)
 
 export function SupabaseProvider({ children }: { children: React.ReactNode }) {
-  const [supabase] = useState(() => createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  ))
+  const [supabase] = useState(() => createClient())
   
   // Ref para armazenar a subscription
   const authSubscriptionRef = useRef<{ unsubscribe: () => void } | null>(null);

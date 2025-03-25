@@ -39,7 +39,7 @@ export function TemporizadorFoco() {
     if (temporizadorAtivo) {
       pararTemporizador()
     }
-  }, [hiperfocoSelecionadoId, hiperfocos])
+  }, [hiperfocoSelecionadoId, hiperfocos, temporizadorAtivo, pararTemporizador])
   
   // Limpar timer ao desmontar componente
   useEffect(() => {
