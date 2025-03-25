@@ -13,6 +13,7 @@ import { Modal } from '../ui/Modal'
 import { Alert } from '../ui/Alert'
 import { MedicamentosList } from './MedicamentosList'
 import { StatCard } from './StatCard'
+import { toast } from 'react-hot-toast'
 
 export function RegistroMedicamentos() {
   // Usar o Zustand para gerenciamento de estado
@@ -152,6 +153,23 @@ export function RegistroMedicamentos() {
     setNovoHorario('08:00')
     setErro('')
   }, [])
+
+  const handleSubmit = useCallback(async (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    try {
+      // ... código existente ...
+      
+      resetForm();
+    } catch (error) {
+      console.error('Erro ao salvar medicamento:', error);
+      toast.error('Erro: Não foi possível salvar o medicamento');
+    }
+  }, [resetForm]);
+
+  const handleCancel = useCallback(() => {
+    resetForm();
+  }, [resetForm]);
 
   // Estatísticas sobre medicamentos
   const estatisticas = useMemo(() => {

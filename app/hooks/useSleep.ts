@@ -20,6 +20,20 @@ type MigrationResult = {
   error?: string;
 };
 
+// Cache para armazenar os resultados das requisições
+const cache = {
+  sleepRecords: new Map<string, { data: SleepRecord[]; timestamp: number }>(),
+  sleepReminders: new Map<string, { data: SleepReminder[]; timestamp: number }>(),
+};
+
+// Tempo de expiração do cache em milissegundos (5 minutos)
+const CACHE_EXPIRATION = 5 * 60 * 1000;
+
+// Função para verificar se o cache está válido
+const isCacheValid = (timestamp: number) => {
+  return Date.now() - timestamp < CACHE_EXPIRATION;
+};
+
 export function useSleep() {
   const supabase = createClient();
   const { user } = useAuthContext();
@@ -29,11 +43,17 @@ export function useSleep() {
   // Ref para controlar se o componente está montado
   const isMounted = useRef(true);
   
+  // Ref para debounce
+  const debounceTimer = useRef<NodeJS.Timeout>();
+  
   // Configurar e limpar flag de montagem
   useEffect(() => {
     isMounted.current = true;
     return () => {
       isMounted.current = false;
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+      }
     };
   }, []);
   
@@ -44,11 +64,31 @@ export function useSleep() {
     }
   }, []);
 
+  // Função de debounce com tipo genérico
+  const debounce = <T>(fn: () => Promise<T>, delay: number = 300): Promise<T> => {
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
+    return new Promise((resolve) => {
+      debounceTimer.current = setTimeout(async () => {
+        const result = await fn();
+        resolve(result);
+      }, delay);
+    });
+  };
+
   // GERENCIAMENTO DE REGISTROS DE SONO
 
   // Obter todos os registros de sono do usuário
   const getSleepRecords = useCallback(async (): Promise<SleepRecord[]> => {
     if (!user || !isMounted.current) return [];
+    
+    const cacheKey = `${user.id}_records`;
+    const cachedData = cache.sleepRecords.get(cacheKey);
+    
+    if (cachedData && isCacheValid(cachedData.timestamp)) {
+      return cachedData.data;
+    }
     
     if (isMounted.current) {
       setIsLoading(true);
@@ -56,15 +96,26 @@ export function useSleep() {
     }
     
     try {
-      const { data, error } = await supabase
-        .from('sleep_records')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('start_time', { ascending: false });
+      const result = await debounce<SleepRecord[]>(async () => {
+        const { data, error } = await supabase
+          .from('sleep_records')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('start_time', { ascending: false });
+          
+        if (error) throw new Error(error.message);
         
-      if (error) throw new Error(error.message);
+        // Atualizar cache
+        const records = data || [];
+        cache.sleepRecords.set(cacheKey, {
+          data: records,
+          timestamp: Date.now(),
+        });
+        
+        return records;
+      });
       
-      return data || [];
+      return result;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Erro ao buscar registros de sono';
       if (isMounted.current) {

@@ -23,27 +23,19 @@ export function Toast({
   onClose,
   show
 }: ToastProps) {
-  const [isVisible, setIsVisible] = useState(show)
-
-  useEffect(() => {
-    setIsVisible(show)
-  }, [show])
-
-  useEffect(() => {
-    if (!isVisible) return
-
-    // Auto close after duration
-    const timer = setTimeout(() => {
-      handleClose()
-    }, duration)
-
-    return () => clearTimeout(timer)
-  }, [duration, isVisible])
+  const [isVisible, setIsVisible] = useState(true)
 
   const handleClose = () => {
     setIsVisible(false)
-    if (onClose) onClose()
+    onClose?.()
   }
+
+  useEffect(() => {
+    if (duration && isVisible) {
+      const timer = setTimeout(handleClose, duration)
+      return () => clearTimeout(timer)
+    }
+  }, [isVisible, duration, handleClose])
 
   // Se não estiver visível, não renderizar nada
   if (!isVisible) return null

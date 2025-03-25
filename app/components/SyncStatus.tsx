@@ -9,7 +9,9 @@ export function SyncStatus() {
     table: 'priorities',
     localStorageKey: 'priorities',
     getLocalData: () => store.prioridades,
-    setLocalData: (data) => store.setPrioridades(data)
+    setLocalData: (data) => store.setPrioridades(data),
+    enabled: true,
+    interval: 5000 // sincroniza a cada 5 segundos
   })
 
   return (

@@ -73,9 +73,17 @@ export function withPerformanceTracking(Component, componentName) {
     const ref = React.useRef(null);
     
     React.useEffect(() => {
-      const duration = performance.now() - startTime;
-      trackPerformance('RENDER', componentName, duration);
-    }, []);
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      
+      if (duration > PERFORMANCE_THRESHOLDS.RENDER) {
+        console.warn(`Query performance warning: ${componentName} took ${duration}ms`);
+      }
+      
+      return () => {
+        // Cleanup if needed
+      };
+    }, [componentName, startTime]);
     
     return <Component ref={ref} {...props} />;
   };

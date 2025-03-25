@@ -43,12 +43,20 @@ export function TemporizadorFoco() {
   
   // Limpar timer ao desmontar componente
   useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current)
-      }
+    let timer: NodeJS.Timeout;
+    
+    if (temporizadorAtivo && tempoRestante > 0) {
+      timer = setInterval(() => {
+        setTempoRestante((prev) => prev - 1);
+      }, 1000);
     }
-  }, [])
+    
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [tempoRestante, temporizadorAtivo]);
   
   // Iniciar temporizador
   const iniciarTemporizador = () => {

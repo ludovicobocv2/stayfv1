@@ -13,6 +13,7 @@ import { Alert } from '../ui/Alert'
 import { StatCard } from './StatCard'
 import { HumorCalendar } from './HumorCalendar'
 import { FatoresHumor } from './FatoresHumor'
+import { toast } from 'react-hot-toast'
 
 export function MonitoramentoHumor() {
   // Usar o Zustand para gerenciamento de estado
@@ -216,6 +217,23 @@ export function MonitoramentoHumor() {
   const nomeDoMes = useMemo(() => {
     return new Date(anoAtual, mesAtual).toLocaleDateString('pt-BR', { month: 'long' })
   }, [mesAtual, anoAtual])
+
+  const handleSubmit = useCallback(async (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    try {
+      // ... código existente ...
+      
+      resetForm();
+    } catch (error) {
+      console.error('Erro ao salvar registro:', error);
+      toast.error('Erro: Não foi possível salvar o registro');
+    }
+  }, [resetForm]);
+
+  const handleCancel = useCallback(() => {
+    resetForm();
+  }, [resetForm]);
 
   return (
     <div className="space-y-6">

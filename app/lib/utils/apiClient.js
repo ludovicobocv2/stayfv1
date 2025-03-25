@@ -93,7 +93,7 @@ export async function fetchWithRetry(requestFn, retryOptions = {}) {
 }
 
 // API wrapper methods com retry integrado
-export default {
+const apiClientMethods = {
   async get(url, config = {}) {
     return fetchWithRetry(() => apiClient.get(url, config));
   },
@@ -110,3 +110,5 @@ export default {
     return fetchWithRetry(() => apiClient.delete(url, config));
   }
 };
+
+export default apiClientMethods;

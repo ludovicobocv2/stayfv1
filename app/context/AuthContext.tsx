@@ -1,10 +1,11 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useEffect } from 'react';
+import { createContext, useContext, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { useAuth } from '@/app/hooks/useAuth';
 import { useDataSync } from '@/app/hooks/useDataSync';
 import { useStore } from '@/app/stores/store';
+import { BaseItem } from '@/app/types/supabase';
 
 type AuthContextType = {
   user: User | null;
@@ -19,6 +20,12 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Configurações comuns para sincronização
+const SYNC_CONFIG = {
+  enabled: true,
+  interval: 5000 // sincroniza a cada 5 segundos
+} as const;
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const auth = useAuth();
   const store = useStore();
@@ -28,28 +35,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     table: 'priorities',
     localStorageKey: 'priorities',
     getLocalData: () => store.prioridades,
-    setLocalData: (data) => store.setPrioridades(data)
+    setLocalData: (data) => store.setPrioridades(data),
+    ...SYNC_CONFIG
   });
 
   const medicationsSync = useDataSync({
     table: 'medications',
     localStorageKey: 'medications',
     getLocalData: () => store.medicamentos,
-    setLocalData: (data) => store.setMedicamentos(data)
+    setLocalData: (data) => store.setMedicamentos(data),
+    ...SYNC_CONFIG
   });
 
   const moodRecordsSync = useDataSync({
     table: 'mood_records',
     localStorageKey: 'mood_records',
     getLocalData: () => store.registrosHumor,
-    setLocalData: (data) => store.setRegistrosHumor(data)
+    setLocalData: (data) => store.setRegistrosHumor(data),
+    ...SYNC_CONFIG
   });
 
   const sleepRecordsSync = useDataSync({
     table: 'sleep_records',
     localStorageKey: 'sleep_records',
     getLocalData: () => store.registrosSono,
-    setLocalData: (data) => store.setRegistrosSono(data)
+    setLocalData: (data) => store.setRegistrosSono(data),
+    ...SYNC_CONFIG
   });
 
   return (

@@ -133,7 +133,7 @@ window.addEventListener('beforeunload', () => {
   }
 });
 
-export default {
+const logger = {
   logDebug,
   logInfo,
   logWarning,
@@ -141,3 +141,5 @@ export default {
   logPerformance,
   configureLogger
 };
+
+export default logger;
