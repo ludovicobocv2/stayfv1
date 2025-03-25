@@ -1,127 +1,85 @@
 import axios from 'axios';
+import { supabase } from '../lib/supabase';
 
-// Cache para armazenar respostas recentes
+// Cache simplificado
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos em desenvolvimento
 const cache = new Map();
-const CACHE_DURATION = 300000; // Aumentado para 5 minutos
 
-// Configuração do cliente axios
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.exemplo.com',
-  timeout: 10000,
-});
-
-// Fila de requisições para implementar rate limiting
-const requestQueue = [];
-let isProcessingQueue = false;
-const MAX_CONCURRENT_REQUESTS = 2; // Reduzido para 2 requisições simultâneas
-const RETRY_DELAY = 2000; // Aumentado para 2 segundos
-const MAX_RETRIES = 5; // Aumentado para 5 tentativas
-
-// Processador da fila de requisições
-const processQueue = async () => {
-  if (isProcessingQueue || requestQueue.length === 0) return;
+// Função simplificada para fazer requisições
+const fetchData = async (endpoint) => {
+  const cacheKey = endpoint;
   
-  isProcessingQueue = true;
-  
-  const batch = requestQueue.splice(0, MAX_CONCURRENT_REQUESTS);
-  await Promise.allSettled(batch.map(req => req.execute()));
-  
-  isProcessingQueue = false;
-  if (requestQueue.length > 0) {
-    setTimeout(processQueue, 300); // Intervalo entre lotes de requisições
-  }
-};
-
-// Função para fazer requisições com cache, limitação de taxa e retentativas
-const fetchWithRetry = async (endpoint, options = {}, retryCount = 0) => {
-  const cacheKey = `${options.method || 'GET'}_${endpoint}_${JSON.stringify(options.data || {})}`;
-  
-  // Verificar se existe no cache e se ainda é válido
-  const cachedResponse = cache.get(cacheKey);
-  if (cachedResponse && cachedResponse.timestamp > Date.now() - CACHE_DURATION) {
-    console.log(`Usando resposta em cache para: ${endpoint}`);
-    return cachedResponse.data;
+  // Verificar cache primeiro
+  const cached = cache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    return cached.data;
   }
   
   try {
-    const response = await api(endpoint, options);
+    const { data, error } = await supabase
+      .from(endpoint.slice(1))
+      .select('*')
+      .order('updated_at', { ascending: false })
+      .limit(20);
+      
+    if (error) throw error;
     
-    // Armazenar resposta no cache
+    // Armazenar no cache
     cache.set(cacheKey, {
-      data: response.data,
+      data,
       timestamp: Date.now()
     });
     
-    return response.data;
+    return data;
   } catch (error) {
-    // Verificar se devemos tentar novamente
-    if (retryCount < MAX_RETRIES) {
-      console.log(`Tentativa ${retryCount + 1} falhou para ${endpoint}. Tentando novamente...`);
-      
-      // Atraso exponencial entre tentativas
-      const delay = RETRY_DELAY * Math.pow(2, retryCount);
-      await new Promise(resolve => setTimeout(resolve, delay));
-      
-      return fetchWithRetry(endpoint, options, retryCount + 1);
-    }
-    
-    // Se for um erro 404, podemos retornar um objeto vazio em vez de falhar
-    if (error.response && error.response.status === 404) {
-      console.warn(`Recurso não encontrado (404): ${endpoint}. Retornando objeto vazio.`);
-      return { error: 'not_found', message: 'Recurso não encontrado' };
-    }
-    
-    // Para o erro de recursos insuficientes, também retornamos dados vazios
-    if (error.message.includes('ERR_INSUFFICIENT_RESOURCES')) {
-      console.warn(`Recursos insuficientes para: ${endpoint}. Retornando objeto vazio.`);
-      return { error: 'insufficient_resources', message: 'Navegador sem recursos disponíveis' };
-    }
-    
-    throw error;
+    console.error('Erro na requisição:', error);
+    return [];
   }
 };
 
-// Função para adicionar requisição à fila
-const queueRequest = (endpoint, options = {}) => {
-  return new Promise((resolve, reject) => {
-    requestQueue.push({
-      execute: async () => {
-        try {
-          const result = await fetchWithRetry(endpoint, options);
-          resolve(result);
-        } catch (error) {
-          console.error(`Erro na sincronização: ${error.message || 'Erro desconhecido'}`);
-          reject(error);
-        }
-      }
-    });
-    
-    // Iniciar processamento da fila se ainda não estiver em andamento
-    if (!isProcessingQueue) {
-      processQueue();
-    }
-  });
-};
-
-// Métodos da API
+// Métodos simplificados da API
 const apiService = {
   // Medications
-  getMedications: () => queueRequest('/medications'),
-  createMedication: (data) => queueRequest('/medications', { method: 'POST', data }),
-  updateMedication: (id, data) => queueRequest(`/medications/${id}`, { method: 'PUT', data }),
+  getMedications: () => fetchData('/medications'),
+  createMedication: async (data) => {
+    const { data: result } = await supabase.from('medications').insert(data);
+    cache.delete('/medications');
+    return result;
+  },
+  updateMedication: async (id, data) => {
+    const { data: result } = await supabase.from('medications').update(data).eq('id', id);
+    cache.delete('/medications');
+    return result;
+  },
   
   // Mood records
-  getMoodRecords: () => queueRequest('/mood_records'),
-  createMoodRecord: (data) => queueRequest('/mood_records', { method: 'POST', data }),
+  getMoodRecords: () => fetchData('/mood_records'),
+  createMoodRecord: async (data) => {
+    const { data: result } = await supabase.from('mood_records').insert(data);
+    cache.delete('/mood_records');
+    return result;
+  },
   
   // Sleep records
-  getSleepRecords: () => queueRequest('/sleep_records'),
-  createSleepRecord: (data) => queueRequest('/sleep_records', { method: 'POST', data }),
+  getSleepRecords: () => fetchData('/sleep_records'),
+  createSleepRecord: async (data) => {
+    const { data: result } = await supabase.from('sleep_records').insert(data);
+    cache.delete('/sleep_records');
+    return result;
+  },
   
   // Priorities
-  getPriorities: () => queueRequest('/priorities'),
-  createPriority: (data) => queueRequest('/priorities', { method: 'POST', data }),
-  updatePriority: (id, data) => queueRequest(`/priorities/${id}`, { method: 'PUT', data }),
+  getPriorities: () => fetchData('/priorities'),
+  createPriority: async (data) => {
+    const { data: result } = await supabase.from('priorities').insert(data);
+    cache.delete('/priorities');
+    return result;
+  },
+  updatePriority: async (id, data) => {
+    const { data: result } = await supabase.from('priorities').update(data).eq('id', id);
+    cache.delete('/priorities');
+    return result;
+  },
   
   // Limpar cache
   clearCache: () => {
