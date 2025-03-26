@@ -1,0 +1,192 @@
+/**
+ * @description Regras e diretrizes para o domínio Backend no projeto StayFocus.
+ * Este domínio é responsável pela lógica de negócios, persistência de dados e APIs.
+ * @autoAttach {
+ *   "patterns": ["**/backend/**/*", "**/*.py", "**/*.sql", "**/api/**/*"],
+ *   "description": "Arquivos relacionados ao backend da aplicação"
+ * }
+ */
+
+// Arquitetura Backend
+const BACKEND_ARCHITECTURE = {
+  framework: {
+    core: "FastAPI",
+    database: "PostgreSQL + TimescaleDB",
+    orm: "SQLAlchemy",
+    validation: "Pydantic"
+  },
+  structure: {
+    api: [
+      "/api/v1 - Endpoints da API",
+      "/api/dependencies - Injeção de dependências",
+      "/api/middleware - Middlewares da aplicação",
+      "/api/utils - Utilitários da API"
+    ],
+    core: [
+      "/core/config - Configurações",
+      "/core/security - Segurança",
+      "/core/events - Sistema de eventos",
+      "/core/logging - Configuração de logs"
+    ],
+    models: [
+      "/models - Modelos do banco de dados",
+      "/schemas - Schemas Pydantic",
+      "/repositories - Camada de acesso a dados",
+      "/services - Lógica de negócios"
+    ]
+  }
+};
+
+// Padrões de Desenvolvimento
+const DEVELOPMENT_PATTERNS = {
+  api: {
+    structure: [
+      "Rotas em módulos separados",
+      "Validação com Pydantic",
+      "Documentação com OpenAPI",
+      "Versionamento de API"
+    ],
+    endpoints: [
+      "Nomenclatura RESTful",
+      "Respostas padronizadas",
+      "Tratamento de erros",
+      "Rate limiting"
+    ]
+  },
+  database: {
+    models: [
+      "Modelos SQLAlchemy",
+      "Migrations com Alembic",
+      "Índices otimizados",
+      "Relacionamentos explícitos"
+    ],
+    queries: [
+      "Queries otimizadas",
+      "Uso de joins apropriados",
+      "Paginação eficiente",
+      "Cache quando necessário"
+    ]
+  }
+};
+
+// Padrões de Segurança
+const SECURITY_PATTERNS = {
+  authentication: {
+    jwt: [
+      "Tokens JWT",
+      "Refresh tokens",
+      "Expiração adequada",
+      "Rotação de tokens"
+    ],
+    oauth: [
+      "OAuth 2.0",
+      "Provedores externos",
+      "Fluxo seguro",
+      "Validação de tokens"
+    ]
+  },
+  authorization: {
+    rbac: [
+      "Controle baseado em roles",
+      "Permissões granulares",
+      "Middleware de autorização",
+      "Auditoria de acessos"
+    ],
+    data: [
+      "Filtragem por usuário",
+      "Validação de ownership",
+      "Sanitização de inputs",
+      "Logs de acesso"
+    ]
+  }
+};
+
+// Padrões de Performance
+const PERFORMANCE_PATTERNS = {
+  database: {
+    optimization: [
+      "Índices apropriados",
+      "Queries otimizadas",
+      "Connection pooling",
+      "Query caching"
+    ],
+    timescale: [
+      "Hypertables para séries temporais",
+      "Políticas de retenção",
+      "Continuous aggregates",
+      "Compressão de dados"
+    ]
+  },
+  caching: {
+    strategies: [
+      "Cache em memória",
+      "Cache distribuído",
+      "Invalidação seletiva",
+      "Cache warming"
+    ],
+    layers: [
+      "Cache de aplicação",
+      "Cache de banco de dados",
+      "Cache de API",
+      "Cache de consultas"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  required: [
+    "README.md em cada módulo",
+    "Documentação de API (OpenAPI)",
+    "Modelos de dados",
+    "Fluxos de autenticação"
+  ],
+  api: [
+    "Descrição dos endpoints",
+    "Parâmetros e tipos",
+    "Exemplos de requests/responses",
+    "Códigos de erro"
+  ],
+  database: [
+    "Schema do banco",
+    "Índices e constraints",
+    "Políticas de backup",
+    "Estratégias de migração"
+  ]
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "techContext.md",
+    "systemPatterns.md",
+    "decisions.md"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Documentar mudanças em changelog.md",
+    "Atualizar knowledgeGraph.md"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  code: [
+    "Legibilidade",
+    "Manutenibilidade",
+    "Performance",
+    "Testabilidade"
+  ],
+  api: [
+    "Consistência",
+    "Documentação",
+    "Performance",
+    "Segurança"
+  ],
+  data: [
+    "Integridade",
+    "Consistência",
+    "Performance",
+    "Backup/Recovery"
+  ]
+};

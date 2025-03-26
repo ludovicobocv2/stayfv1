@@ -1,0 +1,121 @@
+/**
+ * @description Regras e diretrizes para o modo Debug no projeto StayFocus.
+ * Este modo é responsável pela investigação de problemas, resolução de erros e otimização de performance.
+ * @autoAttach {
+ *   "patterns": ["**/logs/**/*", "**/*.log", "**/tests/**/*", "**/debug/**/*"],
+ *   "description": "Arquivos relacionados a debugging, logs e testes"
+ * }
+ */
+
+// Responsabilidades Principais
+const DEBUG_RESPONSIBILITIES = {
+  investigation: [
+    "Análise de logs e erros",
+    "Reprodução de problemas",
+    "Identificação de causas raiz",
+    "Documentação de problemas"
+  ],
+  errorResolution: [
+    "Correção de bugs",
+    "Validação de fixes",
+    "Testes de regressão",
+    "Documentação de soluções"
+  ],
+  performance: [
+    "Identificação de gargalos",
+    "Otimização de código",
+    "Análise de métricas",
+    "Melhorias de performance"
+  ]
+};
+
+// Padrões de Debug
+const DEBUG_PATTERNS = {
+  logging: {
+    levels: [
+      "ERROR: Problemas críticos",
+      "WARN: Situações inesperadas",
+      "INFO: Informações importantes",
+      "DEBUG: Detalhes de execução"
+    ],
+    format: [
+      "Timestamp",
+      "Nível do log",
+      "Contexto",
+      "Mensagem",
+      "Stack trace (se aplicável)"
+    ]
+  },
+  investigation: {
+    steps: [
+      "Reproduzir o problema",
+      "Coletar logs relevantes",
+      "Analisar stack trace",
+      "Identificar padrões"
+    ],
+    tools: [
+      "Chrome DevTools",
+      "VS Code Debugger",
+      "Python Debugger",
+      "Logging Framework"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  required: [
+    "debugging.mdc",
+    "techDebt.md",
+    "progress.md"
+  ],
+  bugReport: [
+    "Descrição do problema",
+    "Passos para reproduzir",
+    "Comportamento esperado",
+    "Comportamento atual",
+    "Logs relevantes"
+  ],
+  solution: [
+    "Causa raiz identificada",
+    "Solução implementada",
+    "Testes realizados",
+    "Impacto da mudança"
+  ]
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "techDebt.md",
+    "progress.md",
+    "decisions.md"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Registrar bugs em techDebt.md",
+    "Documentar soluções em decisions.md"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  investigation: [
+    "Profundidade da análise",
+    "Qualidade dos logs",
+    "Reprodutibilidade",
+    "Documentação clara"
+  ],
+  solution: [
+    "Efetividade",
+    "Performance",
+    "Testabilidade",
+    "Manutenibilidade"
+  ],
+  documentation: [
+    "Clareza",
+    "Completude",
+    "Rastreabilidade",
+    "Utilidade"
+  ]
+};

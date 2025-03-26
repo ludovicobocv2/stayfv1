@@ -1,5 +1,6 @@
 'use client'
 
+import { StrictMode } from 'react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { type ThemeProviderProps } from 'next-themes/dist/types'
 import { AuthProvider } from './context/AuthContext'
@@ -13,14 +14,16 @@ type ProvidersProps = ThemeProviderProps & {
 
 export function Providers({ children, ...props }: ProvidersProps) {
   return (
-    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem {...props}>
+    <StrictMode>
       <SupabaseProvider>
-        <AuthProvider>
-          <ToastProvider>
-            {children}
-          </ToastProvider>
-        </AuthProvider>
+        <NextThemesProvider attribute="class" defaultTheme="system" enableSystem {...props}>
+          <AuthProvider>
+            <ToastProvider>
+              {children}
+            </ToastProvider>
+          </AuthProvider>
+        </NextThemesProvider>
       </SupabaseProvider>
-    </NextThemesProvider>
+    </StrictMode>
   )
 }

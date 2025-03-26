@@ -117,3 +117,95 @@ Este documento registra a dívida técnica atual do projeto MyNeuroApp, incluind
 ## Feedback e Sugestões
 
 Para sugerir novos itens de dívida técnica ou comentar sobre os existentes, entre em contato com a equipe de desenvolvimento ou abra uma issue no repositório do projeto. 
+
+# Dívida Técnica e Problemas Conhecidos
+
+[STATUS: CURRENT]
+Data da última atualização: 26/03/2024
+Versão: 1.0
+
+## Sumário Executivo
+Este documento rastreia as dívidas técnicas e problemas conhecidos no projeto, incluindo suas prioridades e estratégias de mitigação.
+
+## Pontos-Chave
+- Problemas de autenticação nos testes de integração
+- Dificuldades com funções RPC no Supabase
+- Questões de sincronização e requisições duplicadas
+
+## Problemas Detalhados
+
+### 1. Autenticação em Testes de Integração
+**Prioridade: Alta**
+**Status: Em Investigação**
+
+#### Descrição
+Enfrentamos dificuldades persistentes com a autenticação de usuários de teste durante os testes de integração. O sistema retorna consistentemente o erro "Invalid login credentials" mesmo quando as credenciais parecem estar configuradas corretamente.
+
+#### Impacto
+- Impossibilidade de executar testes de integração automatizados
+- Bloqueio no desenvolvimento de novos recursos que dependem de autenticação
+- Atraso na validação de funcionalidades de sincronização
+
+#### Tentativas de Solução
+1. Criação de usuário de teste via API de administração do Supabase
+2. Tentativa de criação direta no banco de dados
+3. Configuração de variáveis de ambiente em `.env.test`
+
+#### Próximos Passos
+1. Investigar permissões do banco de dados para criação de usuários
+2. Verificar configurações de autenticação no projeto Supabase
+3. Implementar logging mais detalhado durante o processo de autenticação
+
+### 2. Função RPC test_sync_status
+**Prioridade: Alta**
+**Status: Em Andamento**
+
+#### Descrição
+A função RPC `test_sync_status` não está sendo encontrada no cache do schema do Supabase, mesmo após várias tentativas de criação e configuração.
+
+#### Impacto
+- Falha nos testes de sincronização
+- Impossibilidade de validar o status de sincronização
+- Bloqueio nos testes de integração
+
+#### Tentativas de Solução
+1. Recriação da função com diferentes níveis de permissão
+2. Configuração de SECURITY DEFINER
+3. Concessão de permissões específicas para usuários autenticados
+
+#### Próximos Passos
+1. Verificar se a função está sendo criada corretamente no banco de dados
+2. Investigar problemas de cache do PostgREST
+3. Implementar uma solução alternativa para testes de sincronização
+
+### 3. Sincronização e Requisições Duplicadas
+**Prioridade: Média**
+**Status: Parcialmente Resolvido**
+
+#### Descrição
+O sistema apresentava problemas com requisições duplicadas durante o processo de sincronização, embora algumas melhorias já tenham sido implementadas.
+
+#### Impacto
+- Consumo desnecessário de recursos
+- Possível inconsistência de dados
+- Performance degradada
+
+#### Soluções Implementadas
+1. Implementação de debounce no hook `useBidirectionalSync`
+2. Modificação do `AuthContext.tsx` para restringir chamadas de teste
+3. Adição de monitoramento de requisições
+
+#### Próximos Passos
+1. Implementar mecanismo de retry com backoff exponencial
+2. Adicionar cache de resultados para evitar chamadas desnecessárias
+3. Melhorar o logging de sincronização
+
+## Referências
+- [AuthContext.tsx](app/context/AuthContext.tsx)
+- [useBidirectionalSync.ts](app/hooks/useBidirectionalSync.ts)
+- [console-test.spec.ts](tests/console-test.spec.ts)
+
+## Histórico de Revisões
+| Data | Versão | Descrição | Autor |
+|------|---------|-----------|--------|
+| 26/03/2024 | 1.0 | Documentação inicial dos problemas | Cursor | 

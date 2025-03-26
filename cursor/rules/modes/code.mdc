@@ -1,0 +1,126 @@
+/**
+ * @description Regras e diretrizes para o modo Código no projeto StayFocus.
+ * Este modo é responsável pela implementação, desenvolvimento, modificação de código e controle de qualidade.
+ * @autoAttach {
+ *   "patterns": ["**/*.ts", "**/*.tsx", "**/*.py", "**/*.sql"],
+ *   "description": "Arquivos de código-fonte do projeto"
+ * }
+ */
+
+// Responsabilidades Principais
+const CODE_RESPONSIBILITIES = {
+  implementation: [
+    "Desenvolvimento de novas funcionalidades",
+    "Implementação de padrões arquiteturais",
+    "Codificação de componentes",
+    "Integração de sistemas"
+  ],
+  codeModification: [
+    "Refatoração de código existente",
+    "Otimização de performance",
+    "Correção de bugs",
+    "Atualização de dependências"
+  ],
+  documentation: [
+    "Documentação de código",
+    "Atualização de documentação técnica",
+    "Manutenção de comentários",
+    "Criação de exemplos de uso"
+  ],
+  qualityControl: [
+    "Implementação de testes",
+    "Revisão de código",
+    "Aplicação de padrões de código",
+    "Monitoramento de métricas"
+  ]
+};
+
+// Padrões de Código
+const CODE_PATTERNS = {
+  typescript: {
+    style: "Seguir ESLint e Prettier configurados",
+    naming: {
+      components: "PascalCase",
+      functions: "camelCase",
+      constants: "UPPER_SNAKE_CASE",
+      interfaces: "IPascalCase"
+    },
+    organization: [
+      "Imports agrupados por tipo",
+      "Componentes em arquivos separados",
+      "Tipos/interfaces em arquivo .types.ts",
+      "Hooks em arquivo .hooks.ts"
+    ]
+  },
+  python: {
+    style: "Seguir PEP 8",
+    naming: {
+      classes: "PascalCase",
+      functions: "snake_case",
+      constants: "UPPER_SNAKE_CASE",
+      variables: "snake_case"
+    },
+    organization: [
+      "Imports ordenados (stdlib, third-party, local)",
+      "Classes em arquivos separados",
+      "Models em /models",
+      "Schemas em /schemas"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  required: [
+    "codeDocMap.md",
+    "techContext.md",
+    "code_style.mdc"
+  ],
+  codeComments: [
+    "Documentar funções complexas",
+    "Explicar decisões não óbvias",
+    "Incluir exemplos de uso",
+    "Referenciar tickets/issues relacionados"
+  ],
+  updates: [
+    "Manter codeDocMap.md atualizado",
+    "Documentar mudanças em changelog.md",
+    "Atualizar techContext.md quando necessário"
+  ]
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "techContext.md",
+    "systemPatterns.md",
+    "codeDocMap.md"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Registrar mudanças em changelog.md",
+    "Atualizar progress.md"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  code: [
+    "Legibilidade",
+    "Manutenibilidade",
+    "Performance",
+    "Testabilidade"
+  ],
+  testing: [
+    "Cobertura adequada",
+    "Testes significativos",
+    "Testes de edge cases",
+    "Testes de integração"
+  ],
+  documentation: [
+    "Clareza",
+    "Completude",
+    "Atualidade",
+    "Relevância"
+  ]
+};

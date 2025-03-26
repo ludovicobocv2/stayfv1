@@ -1,0 +1,133 @@
+/**
+ * @description Regras e diretrizes para o modo Teste no projeto StayFocus.
+ * Este modo é responsável pela criação e execução de testes, garantia de qualidade e análise de cobertura.
+ * @autoAttach {
+ *   "patterns": ["**/*.test.ts", "**/*.spec.ts", "**/tests/**/*", "**/__tests__/**/*"],
+ *   "description": "Arquivos de teste e especificações"
+ * }
+ */
+
+// Responsabilidades Principais
+const TEST_RESPONSIBILITIES = {
+  testCreation: [
+    "Desenvolvimento de testes unitários",
+    "Criação de testes de integração",
+    "Implementação de testes e2e",
+    "Definição de casos de teste"
+  ],
+  qualityAssurance: [
+    "Validação de requisitos",
+    "Verificação de comportamentos",
+    "Teste de edge cases",
+    "Garantia de cobertura"
+  ],
+  coverageAnalysis: [
+    "Análise de cobertura de código",
+    "Identificação de gaps",
+    "Priorização de testes",
+    "Relatórios de cobertura"
+  ]
+};
+
+// Padrões de Teste
+const TEST_PATTERNS = {
+  unitTests: {
+    naming: "describe('ComponentName', () => { it('should behavior', () => {}) })",
+    structure: [
+      "Arrange (setup)",
+      "Act (execução)",
+      "Assert (verificação)"
+    ],
+    tools: [
+      "Jest",
+      "React Testing Library",
+      "Pytest",
+      "Coverage tools"
+    ]
+  },
+  integration: {
+    focus: [
+      "Interações entre componentes",
+      "Fluxos de dados",
+      "APIs e serviços",
+      "Estado global"
+    ],
+    tools: [
+      "Supertest",
+      "MSW",
+      "Database fixtures",
+      "Mock services"
+    ]
+  },
+  e2e: {
+    scenarios: [
+      "Fluxos principais",
+      "Casos de erro",
+      "Performance",
+      "Usabilidade"
+    ],
+    tools: [
+      "Cypress",
+      "Playwright",
+      "Selenium",
+      "k6"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  required: [
+    "testing.mdc",
+    "techContext.md",
+    "progress.md"
+  ],
+  testDocs: [
+    "Descrição do teste",
+    "Pré-condições",
+    "Passos de execução",
+    "Resultados esperados"
+  ],
+  coverage: [
+    "Métricas atuais",
+    "Áreas críticas",
+    "Plano de melhoria",
+    "Histórico de progresso"
+  ]
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "techContext.md",
+    "systemPatterns.md",
+    "progress.md"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Registrar cobertura em progress.md",
+    "Documentar padrões em testing.mdc"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  tests: [
+    "Confiabilidade",
+    "Manutenibilidade",
+    "Legibilidade",
+    "Eficiência"
+  ],
+  coverage: [
+    "Cobertura de código",
+    "Cobertura de casos",
+    "Cobertura de caminhos",
+    "Cobertura de branches"
+  ],
+  documentation: [
+    "Clareza",
+    "Completude",
+    "Atualidade",
+    "Utilidade"
+  ]
+};

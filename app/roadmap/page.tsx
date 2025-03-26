@@ -143,6 +143,48 @@ export default function RoadmapPage() {
             </p>
           </div>
 
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-2 mb-2">🤖 Assistente de IA</h3>
+          <ul className="list-disc pl-6 space-y-1 mb-3">
+            <li>Assistente pessoal - Ajuda contextual baseada em seu perfil e necessidades</li>
+            <li>Análise de padrões - Insights sobre seus hábitos e comportamentos</li>
+            <li>Sugestões personalizadas - Recomendações adaptadas ao seu estilo de vida</li>
+            <li>Lembretes inteligentes - Notificações contextuais baseadas em seu histórico</li>
+            <li>Modo conversa natural - Interface amigável e acolhedora para interação</li>
+          </ul>
+
+          <div className="mt-2 mb-4 p-4 border border-blue-200 dark:border-blue-900/50 rounded-lg bg-blue-50 dark:bg-blue-900/20">
+            <p className="text-blue-800 dark:text-blue-200 font-medium mb-2">💡 Exemplos de Interações Inteligentes</p>
+            <div className="space-y-3">
+              <div className="border-l-2 border-blue-300 dark:border-blue-700 pl-3">
+                <p className="text-blue-700 dark:text-blue-300 font-medium">Análise de Sono</p>
+                <p className="text-sm text-blue-600 dark:text-blue-400">
+                  "Notei que você tem dormido mais tarde nos últimos dias. Seus registros mostram que isso coincide com um aumento no uso de telas após as 22h. Que tal experimentarmos um lembrete para começar sua rotina noturna mais cedo?"
+                </p>
+              </div>
+              
+              <div className="border-l-2 border-blue-300 dark:border-blue-700 pl-3">
+                <p className="text-blue-700 dark:text-blue-300 font-medium">Gestão de Medicamentos</p>
+                <p className="text-sm text-blue-600 dark:text-blue-400">
+                  "Seus registros indicam que você costuma esquecer o remédio da tarde quando está em reuniões. Posso ajustar os lembretes para 30 minutos antes das suas reuniões agendadas?"
+                </p>
+              </div>
+              
+              <div className="border-l-2 border-blue-300 dark:border-blue-700 pl-3">
+                <p className="text-blue-700 dark:text-blue-300 font-medium">Suporte Emocional</p>
+                <p className="text-sm text-blue-600 dark:text-blue-400">
+                  "Percebi pelo seu diário que você tem se sentido sobrecarregado nas segundas-feiras. Com base nas suas anotações de autocuidado, que tal começarmos a semana com aquela meditação que você marcou como favorita?"
+                </p>
+              </div>
+              
+              <div className="border-l-2 border-blue-300 dark:border-blue-700 pl-3">
+                <p className="text-blue-700 dark:text-blue-300 font-medium">Produtividade Adaptativa</p>
+                <p className="text-sm text-blue-600 dark:text-blue-400">
+                  "Analisando seus ciclos de foco, você tem melhor desempenho em tarefas criativas pela manhã. Quer que eu reorganize sua lista de prioridades para aproveitar esses momentos de maior criatividade?"
+                </p>
+              </div>
+            </div>
+          </div>
+
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-2 mb-2">🔄 Sincronização e Apps Mobile</h3>
           <ul className="list-disc pl-6 space-y-1 mb-3">
             <li>Backend com Supabase - Sincronização de dados entre dispositivos</li>

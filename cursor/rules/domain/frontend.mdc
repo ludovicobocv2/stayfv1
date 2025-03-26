@@ -1,0 +1,159 @@
+/**
+ * @description Regras e diretrizes para o domínio Frontend no projeto StayFocus.
+ * Este domínio é responsável pela interface do usuário, experiência do usuário e interações client-side.
+ * @autoAttach {
+ *   "patterns": ["**/frontend/**/*", "**/*.tsx", "**/*.ts", "**/*.css", "**/*.scss"],
+ *   "description": "Arquivos relacionados ao frontend da aplicação"
+ * }
+ */
+
+// Arquitetura Frontend
+const FRONTEND_ARCHITECTURE = {
+  framework: {
+    core: "Next.js",
+    styling: ["Tailwind CSS", "Chakra UI"],
+    stateManagement: "Zustand",
+    routing: "Next.js Router"
+  },
+  structure: {
+    components: [
+      "/components/common - Componentes reutilizáveis",
+      "/components/features - Componentes específicos de feature",
+      "/components/layout - Componentes de layout",
+      "/components/ui - Componentes de UI básicos"
+    ],
+    pages: [
+      "/pages - Rotas e páginas",
+      "/pages/api - API routes",
+      "/pages/_app.tsx - Configuração global",
+      "/pages/_document.tsx - Documento HTML base"
+    ],
+    styles: [
+      "/styles/globals.css - Estilos globais",
+      "/styles/themes - Temas da aplicação",
+      "/styles/components - Estilos específicos"
+    ]
+  }
+};
+
+// Padrões de Desenvolvimento
+const DEVELOPMENT_PATTERNS = {
+  components: {
+    structure: [
+      "Componente em arquivo separado",
+      "Tipos em arquivo .types.ts",
+      "Hooks em arquivo .hooks.ts",
+      "Testes em arquivo .test.ts"
+    ],
+    naming: {
+      files: "PascalCase.tsx",
+      components: "PascalCase",
+      hooks: "useCamelCase",
+      types: "IPascalCase"
+    }
+  },
+  stateManagement: {
+    stores: [
+      "Separar por domínio",
+      "Usar slices do Zustand",
+      "Implementar persistência quando necessário",
+      "Documentar shape do estado"
+    ],
+    updates: [
+      "Ações imutáveis",
+      "Evitar mutações diretas",
+      "Usar seletores para performance",
+      "Documentar side effects"
+    ]
+  }
+};
+
+// Padrões de UI/UX
+const UI_UX_PATTERNS = {
+  design: {
+    colors: [
+      "Usar tokens do tema",
+      "Seguir paleta definida",
+      "Manter consistência",
+      "Considerar acessibilidade"
+    ],
+    layout: [
+      "Layout responsivo",
+      "Mobile-first",
+      "Grid system",
+      "Espaçamento consistente"
+    ]
+  },
+  interaction: {
+    feedback: [
+      "Loading states",
+      "Error handling",
+      "Success feedback",
+      "Animações suaves"
+    ],
+    accessibility: [
+      "ARIA labels",
+      "Keyboard navigation",
+      "Screen reader support",
+      "Color contrast"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  required: [
+    "README.md em cada diretório",
+    "Documentação de componentes",
+    "Guia de estilos",
+    "Documentação de APIs"
+  ],
+  components: [
+    "Descrição do propósito",
+    "Props e tipos",
+    "Exemplos de uso",
+    "Dependências"
+  ],
+  storybook: [
+    "Stories para componentes",
+    "Documentação interativa",
+    "Variantes e estados",
+    "Guias de uso"
+  ]
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "techContext.md",
+    "systemPatterns.md",
+    "ui_ux_improvements.md"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Documentar mudanças em changelog.md",
+    "Atualizar knowledgeGraph.md"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  code: [
+    "Legibilidade",
+    "Manutenibilidade",
+    "Performance",
+    "Reutilização"
+  ],
+  ui: [
+    "Consistência",
+    "Responsividade",
+    "Acessibilidade",
+    "Usabilidade"
+  ],
+  documentation: [
+    "Clareza",
+    "Completude",
+    "Exemplos práticos",
+    "Manutenção"
+  ]
+};

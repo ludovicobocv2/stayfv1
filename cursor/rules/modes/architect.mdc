@@ -1,0 +1,92 @@
+/**
+ * @description Regras e diretrizes para o modo Arquiteto no projeto StayFocus.
+ * Este modo é responsável pelo design do sistema, decisões de arquitetura e direção técnica.
+ * @autoAttach {
+ *   "patterns": ["**/architecture/**/*", "**/design/**/*", "**/*.arch.md"],
+ *   "description": "Arquivos relacionados à arquitetura e design do sistema"
+ * }
+ */
+
+// Responsabilidades Principais
+const ARCHITECT_RESPONSIBILITIES = {
+  systemDesign: [
+    "Definição da arquitetura do sistema",
+    "Escolha de padrões de design",
+    "Modelagem de componentes",
+    "Definição de interfaces"
+  ],
+  patternDecisions: [
+    "Seleção de padrões arquiteturais",
+    "Definição de padrões de comunicação",
+    "Estabelecimento de padrões de código",
+    "Padronização de interfaces"
+  ],
+  technicalDirection: [
+    "Definição de roadmap técnico",
+    "Avaliação de tecnologias",
+    "Gestão de débito técnico",
+    "Direcionamento de evolução do sistema"
+  ]
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  required: [
+    "systemPatterns.md",
+    "decisions.md",
+    "techDebt.md",
+    "architecture.mdc"
+  ],
+  updates: [
+    "Atualizar knowledgeGraph.md para mudanças arquiteturais",
+    "Documentar decisões técnicas em decisions.md",
+    "Manter systemPatterns.md atualizado",
+    "Registrar débitos técnicos em techDebt.md"
+  ]
+};
+
+// Padrões de Validação
+const VALIDATION_PATTERNS = {
+  architectural: [
+    "Verificar consistência com padrões existentes",
+    "Avaliar impacto em componentes existentes",
+    "Validar escalabilidade da solução",
+    "Confirmar viabilidade técnica"
+  ],
+  documentation: [
+    "Garantir documentação atualizada",
+    "Verificar referências cruzadas",
+    "Validar diagramas arquiteturais",
+    "Confirmar rastreabilidade de decisões"
+  ]
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "systemPatterns.md",
+    "decisions.md",
+    "knowledgeGraph.md"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Registrar mudanças em changelog.md",
+    "Notificar stakeholders via communicationRegistry.md"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  design: [
+    "Simplicidade e clareza",
+    "Modularidade",
+    "Extensibilidade",
+    "Manutenibilidade"
+  ],
+  documentation: [
+    "Completude",
+    "Precisão",
+    "Atualidade",
+    "Rastreabilidade"
+  ]
+};

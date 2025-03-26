@@ -1,11 +1,12 @@
 'use client';
 
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, ReactNode, useEffect } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { useAuth } from '@/app/hooks/useAuth';
 import { useDataSync } from '@/app/hooks/useDataSync';
 import { useStore } from '@/app/stores/store';
 import { BaseItem } from '@/app/types/supabase';
+import { supabase } from '@/app/lib/supabase';
 
 type AuthContextType = {
   user: User | null;
@@ -23,7 +24,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // Configurações comuns para sincronização
 const SYNC_CONFIG = {
   enabled: true,
-  interval: 5000 // sincroniza a cada 5 segundos
+  interval: 30000 // aumentado para 30 segundos para reduzir a frequência
 } as const;
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -35,7 +36,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     table: 'priorities',
     localStorageKey: 'priorities',
     getLocalData: () => store.prioridades,
-    setLocalData: (data) => store.setPrioridades(data),
+    setLocalData: (data) => {
+      if (JSON.stringify(data) !== JSON.stringify(store.prioridades)) {
+        store.setPrioridades(data);
+      }
+    },
     ...SYNC_CONFIG
   });
 
@@ -43,7 +48,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     table: 'medications',
     localStorageKey: 'medications',
     getLocalData: () => store.medicamentos,
-    setLocalData: (data) => store.setMedicamentos(data),
+    setLocalData: (data) => {
+      if (JSON.stringify(data) !== JSON.stringify(store.medicamentos)) {
+        store.setMedicamentos(data);
+      }
+    },
     ...SYNC_CONFIG
   });
 
@@ -51,7 +60,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     table: 'mood_records',
     localStorageKey: 'mood_records',
     getLocalData: () => store.registrosHumor,
-    setLocalData: (data) => store.setRegistrosHumor(data),
+    setLocalData: (data) => {
+      if (JSON.stringify(data) !== JSON.stringify(store.registrosHumor)) {
+        store.setRegistrosHumor(data);
+      }
+    },
     ...SYNC_CONFIG
   });
 
@@ -59,9 +72,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     table: 'sleep_records',
     localStorageKey: 'sleep_records',
     getLocalData: () => store.registrosSono,
-    setLocalData: (data) => store.setRegistrosSono(data),
+    setLocalData: (data) => {
+      if (JSON.stringify(data) !== JSON.stringify(store.registrosSono)) {
+        store.setRegistrosSono(data);
+      }
+    },
     ...SYNC_CONFIG
   });
+
+  // Remover a sincronização inicial duplicada
+  useEffect(() => {
+    if (auth.user && !auth.loading) {
+      // Apenas verificar o status de sincronização em ambiente de teste
+      if (process.env.NODE_ENV === 'test') {
+        testSyncStatus().catch(console.error);
+      }
+    }
+  }, [auth.user, auth.loading]);
+
+  const testSyncStatus = async () => {
+    if (process.env.NODE_ENV === 'test' && auth.user?.id) {
+      try {
+        await supabase.rpc('test_sync_status', { test_user_id: auth.user.id });
+      } catch (error) {
+        console.error('Erro no teste de sincronização:', error);
+      }
+    }
+  };
 
   return (
     <AuthContext.Provider value={auth}>
@@ -76,14 +113,13 @@ export function useAuthContext() {
   if (typeof window === 'undefined') {
     return {
       user: null,
+      session: null,
       loading: true,
-      signIn: () => Promise.resolve(),
-      signOut: () => Promise.resolve(),
-      signUp: () => Promise.resolve(),
-      signInWithGoogle: () => Promise.resolve(),
-      signUpWithEmail: () => Promise.resolve({ data: null, error: null }),
+      error: null,
       signInWithEmail: () => Promise.resolve({ data: null, error: null }),
-      error: null
+      signUpWithEmail: () => Promise.resolve({ data: null, error: null }),
+      signOut: () => Promise.resolve({ success: false, error: null }),
+      signInWithGoogle: () => Promise.resolve({ data: null, error: null })
     };
   }
 

@@ -1,0 +1,119 @@
+/**
+ * @description Regras e diretrizes para o modo Ask no projeto StayFocus.
+ * Este modo é responsável pela recuperação de informações, clarificação de contexto e busca na documentação.
+ * @autoAttach {
+ *   "patterns": ["**/*.md", "**/*.doc", "**/*.txt", "**/docs/**/*"],
+ *   "description": "Arquivos de documentação e informação"
+ * }
+ */
+
+// Responsabilidades Principais
+const ASK_RESPONSIBILITIES = {
+  informationRetrieval: [
+    "Busca em documentação",
+    "Consulta a código-fonte",
+    "Acesso a decisões técnicas",
+    "Recuperação de contexto"
+  ],
+  contextClarification: [
+    "Esclarecimento de dúvidas",
+    "Explicação de decisões",
+    "Detalhamento de implementações",
+    "Contextualização de mudanças"
+  ],
+  documentationSearch: [
+    "Navegação em documentos",
+    "Busca por palavras-chave",
+    "Localização de referências",
+    "Acesso a histórico"
+  ]
+};
+
+// Padrões de Busca
+const SEARCH_PATTERNS = {
+  documentation: {
+    priority: [
+      "Memory Bank",
+      "Código-fonte",
+      "Comentários",
+      "Histórico de mudanças"
+    ],
+    methods: [
+      "Busca por palavra-chave",
+      "Navegação hierárquica",
+      "Referências cruzadas",
+      "Tags semânticas"
+    ]
+  },
+  context: {
+    sources: [
+      "activeContext.md",
+      "decisions.md",
+      "systemPatterns.md",
+      "techContext.md"
+    ],
+    hierarchy: [
+      "Visão geral",
+      "Detalhes específicos",
+      "Exemplos",
+      "Referências"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  required: [
+    "index.md",
+    "knowledgeGraph.md",
+    "activeContext.md"
+  ],
+  search: [
+    "Priorizar documentos atuais",
+    "Verificar referências cruzadas",
+    "Validar contexto temporal",
+    "Confirmar relevância"
+  ],
+  response: [
+    "Fornecer contexto completo",
+    "Incluir referências",
+    "Indicar fonte da informação",
+    "Sugerir documentação relacionada"
+  ]
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "index.md",
+    "knowledgeGraph.md",
+    "activeContext.md"
+  ],
+  postUpdate: [
+    "Registrar consultas frequentes",
+    "Atualizar índices de busca",
+    "Melhorar documentação conforme necessidade"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  search: [
+    "Precisão",
+    "Relevância",
+    "Completude",
+    "Eficiência"
+  ],
+  response: [
+    "Clareza",
+    "Contextualização",
+    "Utilidade",
+    "Rastreabilidade"
+  ],
+  documentation: [
+    "Organização",
+    "Acessibilidade",
+    "Atualidade",
+    "Interconexão"
+  ]
+};

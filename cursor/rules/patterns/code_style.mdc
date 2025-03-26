@@ -1,0 +1,185 @@
+/**
+ * @description Regras e diretrizes de estilo de código para o projeto StayFocus.
+ * Define padrões de formatação, nomenclatura e organização de código.
+ * @autoAttach {
+ *   "patterns": ["**/*.{ts,tsx,py}", "**/.eslintrc.*", "**/.prettierrc.*", "**/pyproject.toml"],
+ *   "description": "Arquivos de código fonte e configuração de estilo"
+ * }
+ */
+
+// Padrões Gerais
+const GENERAL_PATTERNS = {
+  naming: {
+    variables: [
+      "camelCase para JavaScript/TypeScript",
+      "snake_case para Python",
+      "Nomes descritivos e significativos",
+      "Evitar abreviações não óbvias"
+    ],
+    functions: [
+      "camelCase para JavaScript/TypeScript",
+      "snake_case para Python",
+      "Verbo + substantivo",
+      "Indicar ação clara"
+    ],
+    classes: [
+      "PascalCase para todas as linguagens",
+      "Substantivo ou frase nominal",
+      "Nome descritivo do propósito",
+      "Evitar sufixos desnecessários"
+    ],
+    constants: [
+      "UPPER_SNAKE_CASE",
+      "Prefixo para tipo quando necessário",
+      "Agrupar constantes relacionadas",
+      "Documentar valor e propósito"
+    ]
+  },
+  formatting: {
+    indentation: [
+      "2 espaços para JavaScript/TypeScript",
+      "4 espaços para Python",
+      "Sem tabs",
+      "Alinhar elementos relacionados"
+    ],
+    spacing: [
+      "Espaço após palavras-chave",
+      "Espaço ao redor de operadores",
+      "Linha em branco entre blocos lógicos",
+      "Máximo uma linha em branco consecutiva"
+    ]
+  }
+};
+
+// Padrões TypeScript/JavaScript
+const TS_JS_PATTERNS = {
+  typescript: {
+    types: [
+      "Interfaces para contratos públicos",
+      "Types para unions e intersections",
+      "Generics quando apropriado",
+      "Documentar tipos complexos"
+    ],
+    imports: [
+      "Import nomeado vs default",
+      "Agrupar imports por origem",
+      "Ordenar alfabeticamente",
+      "Remover imports não utilizados"
+    ]
+  },
+  react: {
+    components: [
+      "Componentes funcionais",
+      "Props interface com 'I' prefix",
+      "Prop spreading com cuidado",
+      "Memoization quando necessário"
+    ],
+    hooks: [
+      "Prefixo 'use' obrigatório",
+      "Um hook por arquivo",
+      "Documentar dependências",
+      "Tratar cleanup"
+    ]
+  }
+};
+
+// Padrões Python
+const PYTHON_PATTERNS = {
+  general: {
+    imports: [
+      "Import absoluto preferido",
+      "Agrupar por stdlib, third-party, local",
+      "Ordenar alfabeticamente em grupos",
+      "Um import por linha"
+    ],
+    typing: [
+      "Type hints em todas as funções",
+      "Usar tipos do typing module",
+      "Documentar tipos complexos",
+      "Validar com mypy"
+    ]
+  },
+  fastapi: {
+    routes: [
+      "Decorator com método HTTP",
+      "Path parameters tipados",
+      "Response models explícitos",
+      "Documentar responses"
+    ],
+    models: [
+      "Pydantic models para validação",
+      "SQLAlchemy models para DB",
+      "Documentar campos",
+      "Validadores quando necessário"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  comments: {
+    usage: [
+      "Explicar 'por quê' não 'o quê'",
+      "Manter atualizados",
+      "Remover comentários obsoletos",
+      "Usar TODO com ticket reference"
+    ],
+    format: [
+      "// para comentários inline",
+      "/* */ para blocos",
+      "/** */ para documentação",
+      "# para Python"
+    ]
+  },
+  docstrings: {
+    typescript: [
+      "JSDoc para funções públicas",
+      "Documentar parâmetros",
+      "Documentar retorno",
+      "Exemplos quando complexo"
+    ],
+    python: [
+      "Google style docstrings",
+      "Args, Returns, Raises",
+      "Exemplos em doctest",
+      "Tipos nos docstrings"
+    ]
+  }
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "techContext.md",
+    "systemPatterns.md",
+    "code_style.mdc"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Registrar novos padrões",
+    "Atualizar documentação",
+    "Notificar equipe"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  readability: [
+    "Clareza do código",
+    "Consistência de estilo",
+    "Documentação adequada",
+    "Organização lógica"
+  ],
+  maintainability: [
+    "Modularidade",
+    "Baixo acoplamento",
+    "Alta coesão",
+    "Testabilidade"
+  ],
+  performance: [
+    "Eficiência do código",
+    "Otimização apropriada",
+    "Uso de memória",
+    "Tempo de execução"
+  ]
+};

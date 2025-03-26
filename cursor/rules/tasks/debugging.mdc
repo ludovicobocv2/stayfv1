@@ -1,0 +1,193 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+/**
+ * @description Regras e diretrizes para tarefas de debugging no projeto StayFocus.
+ * Define o processo de investigação, resolução de problemas e otimização.
+ * @autoAttach {
+ *   "patterns": ["**/debug/**/*", "**/*.log", "**/tests/**/*", "**/coverage/**/*"],
+ *   "description": "Arquivos relacionados a debugging e logs"
+ * }
+ */
+
+// Processo de Debug
+const DEBUG_PROCESS = {
+  investigation: {
+    steps: [
+      "Reproduzir o problema",
+      "Coletar informações",
+      "Analisar logs",
+      "Identificar padrões"
+    ],
+    tools: [
+      "Chrome DevTools",
+      "VS Code Debugger",
+      "Python Debugger",
+      "PostgreSQL Explain"
+    ]
+  },
+  analysis: {
+    frontend: [
+      "Console logs",
+      "Network requests",
+      "Component lifecycle",
+      "Estado da aplicação"
+    ],
+    backend: [
+      "Logs de API",
+      "Queries SQL",
+      "Stack traces",
+      "Métricas de performance"
+    ]
+  }
+};
+
+// Padrões de Logging
+const LOGGING_PATTERNS = {
+  levels: {
+    error: "Problemas críticos que precisam de atenção imediata",
+    warn: "Situações inesperadas mas não críticas",
+    info: "Informações importantes do fluxo normal",
+    debug: "Detalhes para debugging"
+  },
+  format: {
+    required: [
+      "Timestamp",
+      "Nível do log",
+      "Contexto",
+      "Mensagem",
+      "Stack trace (se erro)"
+    ],
+    context: [
+      "ID da requisição",
+      "Usuário",
+      "Ambiente",
+      "Versão da aplicação"
+    ]
+  }
+};
+
+// Estratégias de Debug
+const DEBUG_STRATEGIES = {
+  frontend: {
+    react: [
+      "React DevTools",
+      "Component inspection",
+      "Props/State debugging",
+      "Performance profiling"
+    ],
+    network: [
+      "Network tab analysis",
+      "Request/Response inspection",
+      "Cache verification",
+      "CORS issues"
+    ]
+  },
+  backend: {
+    api: [
+      "Request logging",
+      "Response validation",
+      "Middleware debugging",
+      "Authentication flow"
+    ],
+    database: [
+      "Query analysis",
+      "Index usage",
+      "Connection issues",
+      "Transaction debugging"
+    ]
+  }
+};
+
+// Ferramentas de Debug
+const DEBUG_TOOLS = {
+  development: [
+    "VS Code Debugger",
+    "Chrome DevTools",
+    "React Developer Tools",
+    "Redux DevTools"
+  ],
+  monitoring: [
+    "Logging system",
+    "APM tools",
+    "Error tracking",
+    "Performance monitoring"
+  ],
+  testing: [
+    "Jest debugger",
+    "Pytest debugger",
+    "Coverage reports",
+    "Integration tests"
+  ]
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  bugReport: {
+    required: [
+      "Descrição do problema",
+      "Passos para reproduzir",
+      "Comportamento esperado",
+      "Comportamento atual"
+    ],
+    context: [
+      "Ambiente",
+      "Versão",
+      "Logs relevantes",
+      "Screenshots"
+    ]
+  },
+  solution: {
+    documentation: [
+      "Causa raiz",
+      "Solução implementada",
+      "Testes realizados",
+      "Prevenção futura"
+    ],
+    update: [
+      "Atualizar debugging.mdc",
+      "Documentar em decisions.md",
+      "Registrar em changelog.md",
+      "Atualizar techDebt.md"
+    ]
+  }
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "debugging.mdc",
+    "techDebt.md",
+    "decisions.md"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Registrar soluções",
+    "Documentar padrões",
+    "Atualizar knowledgeGraph.md"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  process: [
+    "Eficiência na identificação",
+    "Precisão da solução",
+    "Documentação clara",
+    "Prevenção de recorrência"
+  ],
+  solution: [
+    "Performance",
+    "Robustez",
+    "Manutenibilidade",
+    "Testabilidade"
+  ],
+  documentation: [
+    "Clareza",
+    "Completude",
+    "Rastreabilidade",
+    "Utilidade"
+  ]
+};

@@ -32,6 +32,26 @@ export function useBidirectionalSync<T extends SyncableItem>(options: SyncOption
   // Ref para armazenar a subscription do canal
   const channelRef = useRef<any>(null);
 
+  // Debounce para sincronização com identificador único
+  const syncDebounceTimeout = useRef<NodeJS.Timeout>();
+  const lastSyncRequest = useRef<string>('');
+  
+  const debouncedSync = useCallback(() => {
+    const syncId = new Date().getTime().toString();
+    lastSyncRequest.current = syncId;
+
+    if (syncDebounceTimeout.current) {
+      clearTimeout(syncDebounceTimeout.current);
+    }
+    
+    syncDebounceTimeout.current = setTimeout(async () => {
+      // Verificar se esta ainda é a última requisição de sync
+      if (isMounted.current && lastSyncRequest.current === syncId) {
+        await syncWithServer();
+      }
+    }, 2000); // Aumentado para 2 segundos
+  }, [syncWithServer]);
+
   // Garantir que o deviceId seja persistido
   useEffect(() => {
     if (!localStorage.getItem('deviceId')) {
@@ -156,26 +176,33 @@ export function useBidirectionalSync<T extends SyncableItem>(options: SyncOption
   useEffect(() => {
     if (!user) return;
 
+    // Flag para controlar a sincronização inicial
+    let hasInitialSyncCompleted = false;
+
     // Carregar último timestamp de sincronização
     const savedSyncTime = localStorage.getItem(`${localStorageKey}_lastSync`);
     if (savedSyncTime) {
       safeSetState(setLastSyncTime, savedSyncTime);
     }
 
-    // Sincronizar imediatamente ao montar
-    syncWithServer();
-
-    // Configurar sincronização periódica
-    const syncIntervalId = setInterval(() => {
-      if (isMounted.current) {
-        syncWithServer();
+    // Função para sincronização inicial
+    const performInitialSync = async () => {
+      if (!hasInitialSyncCompleted && isMounted.current) {
+        hasInitialSyncCompleted = true;
+        await syncWithServer();
       }
-    }, 30000); // 30 segundos
+    };
+
+    // Executar sincronização inicial
+    performInitialSync();
+
+    // Configurar sincronização periódica com intervalo maior
+    const syncIntervalId = setInterval(debouncedSync, 60000); // 1 minuto
 
     // Configurar listener para mudanças no localStorage
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === localStorageKey && isMounted.current) {
-        syncWithServer();
+        debouncedSync();
       }
     };
 
@@ -191,32 +218,26 @@ export function useBidirectionalSync<T extends SyncableItem>(options: SyncOption
           table: table,
           filter: `user_id=eq.${user.id}`
         },
-        () => {
-          if (isMounted.current) {
-            syncWithServer();
-          }
-        }
+        debouncedSync
       )
       .subscribe();
     
-    // Armazenar referência ao canal
     channelRef.current = channel;
 
-    // Cleanup
     return () => {
+      if (syncDebounceTimeout.current) {
+        clearTimeout(syncDebounceTimeout.current);
+      }
       clearInterval(syncIntervalId);
       window.removeEventListener('storage', handleStorageChange);
-      
-      // Garantir que a inscrição do canal seja cancelada
       if (channelRef.current) {
         channelRef.current.unsubscribe();
         channelRef.current = null;
       }
-      
-      // Marcar componente como desmontado
       isMounted.current = false;
+      hasInitialSyncCompleted = false;
     };
-  }, [user, localStorageKey, syncWithServer, supabase, table, safeSetState]);
+  }, [user, localStorageKey, debouncedSync, safeSetState, table, supabase, syncWithServer]);
 
   return {
     isSyncing,

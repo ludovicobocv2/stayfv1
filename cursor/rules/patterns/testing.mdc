@@ -1,0 +1,211 @@
+/**
+ * @description Regras e diretrizes de testes para o projeto StayFocus.
+ * Define padrões, estratégias e boas práticas para testes.
+ * @autoAttach {
+ *   "patterns": ["**/*.test.{ts,tsx}", "**/*.spec.{ts,tsx}", "**/*_test.py", "**/tests/**/*"],
+ *   "description": "Arquivos de testes e configurações relacionadas"
+ * }
+ */
+
+// Estratégias de Teste
+const TEST_STRATEGIES = {
+  types: {
+    unit: [
+      "Testes isolados",
+      "Mocking de dependências",
+      "Cobertura de casos de borda",
+      "Foco em comportamento"
+    ],
+    integration: [
+      "Fluxos completos",
+      "Interação entre módulos",
+      "Testes de API",
+      "Testes de banco de dados"
+    ],
+    e2e: [
+      "Fluxos de usuário",
+      "Testes de UI",
+      "Cenários reais",
+      "Performance"
+    ]
+  },
+  approach: {
+    tdd: [
+      "Red-Green-Refactor",
+      "Testes antes do código",
+      "Ciclos curtos",
+      "Feedback rápido"
+    ],
+    bdd: [
+      "Cenários de comportamento",
+      "Given-When-Then",
+      "Documentação viva",
+      "Colaboração"
+    ]
+  }
+};
+
+// Padrões de Teste Frontend
+const FRONTEND_TEST_PATTERNS = {
+  react: {
+    components: [
+      "Renderização",
+      "Interações de usuário",
+      "Props e estado",
+      "Ciclo de vida"
+    ],
+    hooks: [
+      "Comportamento",
+      "Efeitos colaterais",
+      "Atualizações de estado",
+      "Limpeza"
+    ]
+  },
+  tools: {
+    jest: [
+      "Matchers personalizados",
+      "Mocks e spies",
+      "Snapshots",
+      "Coverage"
+    ],
+    rtl: [
+      "Queries por papel",
+      "Eventos de usuário",
+      "Assertions de acessibilidade",
+      "Async utilities"
+    ]
+  }
+};
+
+// Padrões de Teste Backend
+const BACKEND_TEST_PATTERNS = {
+  api: {
+    endpoints: [
+      "Status codes",
+      "Payload validation",
+      "Error handling",
+      "Rate limiting"
+    ],
+    integration: [
+      "Database operations",
+      "External services",
+      "Authentication",
+      "Authorization"
+    ]
+  },
+  tools: {
+    pytest: [
+      "Fixtures",
+      "Parametrização",
+      "Markers",
+      "Coverage"
+    ],
+    factories: [
+      "Model factories",
+      "Fake data",
+      "Estado consistente",
+      "Cleanup"
+    ]
+  }
+};
+
+// Padrões de Mocking
+const MOCKING_PATTERNS = {
+  types: {
+    mocks: [
+      "Comportamento simulado",
+      "Verificação de chamadas",
+      "Retornos customizados",
+      "Exceções"
+    ],
+    stubs: [
+      "Respostas fixas",
+      "Simplificação",
+      "Estado controlado",
+      "Performance"
+    ]
+  },
+  tools: {
+    jest: [
+      "jest.mock()",
+      "jest.spyOn()",
+      "mockImplementation",
+      "mockResolvedValue"
+    ],
+    pytest: [
+      "monkeypatch",
+      "pytest-mock",
+      "unittest.mock",
+      "async mocks"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  test: {
+    structure: [
+      "Descrição do teste",
+      "Arrange-Act-Assert",
+      "Casos de teste claros",
+      "Comentários explicativos"
+    ],
+    naming: [
+      "should_when_given",
+      "Descrição clara",
+      "Agrupamento lógico",
+      "Consistência"
+    ]
+  },
+  coverage: {
+    reports: [
+      "Cobertura de linhas",
+      "Cobertura de branches",
+      "Funções testadas",
+      "Complexidade ciclomática"
+    ],
+    goals: [
+      "Mínimo 80% cobertura",
+      "100% em código crítico",
+      "Qualidade > Quantidade",
+      "Manutenção contínua"
+    ]
+  }
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "techContext.md",
+    "systemPatterns.md",
+    "testing.mdc"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Registrar padrões de teste",
+    "Atualizar documentação",
+    "Notificar equipe"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  tests: [
+    "Confiabilidade",
+    "Manutenibilidade",
+    "Performance",
+    "Clareza"
+  ],
+  coverage: [
+    "Abrangência",
+    "Relevância",
+    "Efetividade",
+    "Eficiência"
+  ],
+  documentation: [
+    "Clareza",
+    "Completude",
+    "Atualidade",
+    "Utilidade"
+  ]
+};

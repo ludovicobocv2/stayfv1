@@ -1,0 +1,165 @@
+/**
+ * @description Regras e diretrizes para desenvolvimento de funcionalidades no projeto StayFocus.
+ * Define o processo de planejamento, implementação e validação de novas features.
+ * @autoAttach {
+ *   "patterns": ["**/*.{ts,tsx,py}", "**/tests/**/*", "**/docs/**/*"],
+ *   "description": "Arquivos de código fonte, testes e documentação"
+ * }
+ */
+
+// Processo de Desenvolvimento
+const DEVELOPMENT_PROCESS = {
+  planning: {
+    requirements: [
+      "Análise de requisitos",
+      "Definição de escopo",
+      "Estimativa de tempo",
+      "Identificação de dependências"
+    ],
+    design: [
+      "Arquitetura da solução",
+      "Design de interface",
+      "Modelagem de dados",
+      "Fluxo de interação"
+    ]
+  },
+  implementation: {
+    frontend: [
+      "Componentes React",
+      "Gerenciamento de estado",
+      "Integração com API",
+      "Testes unitários"
+    ],
+    backend: [
+      "Endpoints API",
+      "Lógica de negócio",
+      "Persistência de dados",
+      "Testes de integração"
+    ]
+  }
+};
+
+// Padrões de Feature
+const FEATURE_PATTERNS = {
+  ui: {
+    components: [
+      "Componentização",
+      "Reutilização",
+      "Responsividade",
+      "Acessibilidade"
+    ],
+    interaction: [
+      "Feedback visual",
+      "Loading states",
+      "Error handling",
+      "Success feedback"
+    ]
+  },
+  api: {
+    endpoints: [
+      "RESTful design",
+      "Validação de dados",
+      "Rate limiting",
+      "Caching"
+    ],
+    responses: [
+      "Status codes",
+      "Error messages",
+      "Payload structure",
+      "Paginação"
+    ]
+  }
+};
+
+// Regras de Implementação
+const IMPLEMENTATION_RULES = {
+  code: {
+    frontend: [
+      "TypeScript strict",
+      "ESLint rules",
+      "Prettier config",
+      "Component patterns"
+    ],
+    backend: [
+      "Type hints",
+      "PEP 8",
+      "Async patterns",
+      "Error handling"
+    ]
+  },
+  testing: {
+    unit: [
+      "Jest/React Testing Library",
+      "Pytest",
+      "Mocking",
+      "Coverage"
+    ],
+    integration: [
+      "API tests",
+      "E2E tests",
+      "Performance tests",
+      "Load tests"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  required: [
+    "Descrição da feature",
+    "Requisitos técnicos",
+    "Guia de implementação",
+    "Casos de teste"
+  ],
+  updates: {
+    files: [
+      "productContext.md",
+      "systemPatterns.md",
+      "progress.md",
+      "decisions.md"
+    ],
+    content: [
+      "Funcionalidades implementadas",
+      "Decisões técnicas",
+      "Dependências",
+      "Próximos passos"
+    ]
+  }
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "productContext.md",
+    "systemPatterns.md",
+    "techContext.md"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Registrar funcionalidades",
+    "Documentar padrões",
+    "Atualizar knowledgeGraph.md"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  functionality: [
+    "Completude",
+    "Corretude",
+    "Performance",
+    "Usabilidade"
+  ],
+  code: [
+    "Legibilidade",
+    "Manutenibilidade",
+    "Testabilidade",
+    "Reusabilidade"
+  ],
+  documentation: [
+    "Clareza",
+    "Completude",
+    "Atualidade",
+    "Utilidade"
+  ]
+};

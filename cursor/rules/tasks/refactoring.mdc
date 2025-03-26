@@ -1,0 +1,155 @@
+/**
+ * @description Regras e diretrizes para tarefas de refatoração no projeto StayFocus.
+ * Define padrões, processos e critérios para melhorar a qualidade do código.
+ * @autoAttach {
+ *   "patterns": ["**/*.{ts,tsx,py}", "**/tests/**/*"],
+ *   "description": "Arquivos de código fonte e testes"
+ * }
+ */
+
+// Padrões de Refatoração
+const REFACTORING_PATTERNS = {
+  code: {
+    principles: [
+      "DRY (Don't Repeat Yourself)",
+      "SOLID",
+      "KISS (Keep It Simple, Stupid)",
+      "YAGNI (You Aren't Gonna Need It)"
+    ],
+    smells: [
+      "Código duplicado",
+      "Métodos longos",
+      "Classes grandes",
+      "Complexidade excessiva"
+    ]
+  },
+  strategies: {
+    extraction: [
+      "Extrair método",
+      "Extrair componente",
+      "Extrair classe",
+      "Extrair interface"
+    ],
+    organization: [
+      "Mover método",
+      "Mover classe",
+      "Renomear",
+      "Reorganizar estrutura"
+    ]
+  }
+};
+
+// Processo de Refatoração
+const REFACTORING_PROCESS = {
+  preparation: [
+    "Identificar áreas problemáticas",
+    "Analisar impacto",
+    "Planejar mudanças",
+    "Criar testes"
+  ],
+  execution: [
+    "Aplicar mudanças incrementais",
+    "Executar testes",
+    "Revisar código",
+    "Documentar alterações"
+  ],
+  validation: [
+    "Testes de regressão",
+    "Review de código",
+    "Análise de performance",
+    "Verificação de qualidade"
+  ]
+};
+
+// Padrões de Código
+const CODE_PATTERNS = {
+  frontend: {
+    react: [
+      "Componentes funcionais",
+      "Hooks customizados",
+      "Props typing",
+      "Memoization"
+    ],
+    state: [
+      "Zustand stores",
+      "Estado local",
+      "Context API",
+      "Imutabilidade"
+    ]
+  },
+  backend: {
+    python: [
+      "Type hints",
+      "Async/await",
+      "Dependency injection",
+      "Repository pattern"
+    ],
+    api: [
+      "RESTful endpoints",
+      "Validação de dados",
+      "Error handling",
+      "Middleware chain"
+    ]
+  }
+};
+
+// Regras de Documentação
+const DOCUMENTATION_RULES = {
+  required: [
+    "Justificativa da refatoração",
+    "Mudanças realizadas",
+    "Impacto nas dependências",
+    "Testes atualizados"
+  ],
+  updates: {
+    files: [
+      "decisions.md",
+      "techDebt.md",
+      "systemPatterns.md",
+      "progress.md"
+    ],
+    content: [
+      "Padrões aplicados",
+      "Decisões técnicas",
+      "Melhorias realizadas",
+      "Débitos técnicos resolvidos"
+    ]
+  }
+};
+
+// Integrações com Memory Bank
+const MEMORY_BANK_INTEGRATION = {
+  preRead: [
+    "systemPatterns.md",
+    "techDebt.md",
+    "decisions.md"
+  ],
+  postUpdate: [
+    "Atualizar activeContext.md",
+    "Registrar mudanças",
+    "Documentar padrões",
+    "Atualizar knowledgeGraph.md"
+  ]
+};
+
+// Critérios de Qualidade
+const QUALITY_CRITERIA = {
+  code: [
+    "Legibilidade",
+    "Manutenibilidade",
+    "Testabilidade",
+    "Performance"
+  ],
+  architecture: [
+    "Coesão",
+    "Acoplamento",
+    "Extensibilidade",
+    "Reusabilidade"
+  ],
+  documentation: [
+    "Clareza",
+    "Completude",
+    "Rastreabilidade",
+    "Atualidade"
+  ]
+};
