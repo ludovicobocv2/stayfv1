@@ -76,14 +76,14 @@ export function withPerformanceTracking(Component, componentName) {
       const endTime = performance.now();
       const duration = endTime - startTime;
       
-      if (duration > PERFORMANCE_THRESHOLDS.RENDER) {
+      if (duration > 100) {
         console.warn(`Query performance warning: ${componentName} took ${duration}ms`);
       }
       
       return () => {
         // Cleanup if needed
       };
-    }, [componentName, startTime]);
+    }, [startTime]);
     
     return <Component ref={ref} {...props} />;
   };

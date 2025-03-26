@@ -132,24 +132,35 @@ export function useDataSync<T extends BaseItem>(config: SyncConfig<T>) {
         lastDataRef.current = dataString
       }
     }
+<<<<<<< HEAD
   }, [config.localStorageKey])
+=======
+  }, [config])
+>>>>>>> 5c787c3bf99b4cd6964a3f3607ec7b06944cb0a4
   
   // Salvar dados no localStorage quando mudarem
   useEffect(() => {
     const currentData = config.getLocalData()
+<<<<<<< HEAD
     const dataString = JSON.stringify(currentData)
     if (dataString !== lastDataRef.current) {
       localStorage.setItem(config.localStorageKey, dataString)
       lastDataRef.current = dataString
     }
   }, [config.getLocalData, config.localStorageKey])
-  
+=======
+    localStorage.setItem(config.localStorageKey, JSON.stringify(currentData))
+  }, [config])
   // Sincronização inicial
   useEffect(() => {
     if (config.enabled && !isSyncing && isOnline) {
       synchronize()
     }
+<<<<<<< HEAD
   }, [config.enabled, isSyncing, isOnline, synchronize])
+=======
+  }, [config, isSyncing, synchronize])
+>>>>>>> 5c787c3bf99b4cd6964a3f3607ec7b06944cb0a4
 
   // Sincronização periódica
   useEffect(() => {

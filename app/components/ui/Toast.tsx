@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react'
 
 type ToastType = 'success' | 'error' | 'info' | 'warning'
@@ -25,10 +25,10 @@ export function Toast({
 }: ToastProps) {
   const [isVisible, setIsVisible] = useState(true)
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsVisible(false)
     onClose?.()
-  }
+  }, [onClose])
 
   useEffect(() => {
     if (duration && isVisible) {

@@ -293,7 +293,7 @@ export function useHumor() {
       // Calcular estatísticas básicas
       if (!data || data.length === 0) return { average: 0, records: [] };
       
-      const sum = data.reduce((acc, record) => acc + record.mood_level, 0);
+      const sum = data.reduce((acc: number, record) => acc + record.mood_level, 0);
       const average = sum / data.length;
       
       // Análise de fatores mais comuns

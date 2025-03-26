@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useHiperfocosStore } from '../../stores/hiperfocosStore'
 import { Clock, Play, Pause, RotateCcw, Bell, Volume2, VolumeX } from 'lucide-react'
 
@@ -17,6 +17,44 @@ export function TemporizadorFoco() {
   
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
+  
+  // Parar temporizador
+  const pararTemporizador = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+    setTemporizadorAtivo(false)
+  }, [])
+
+  // Tocar som de alarme
+  const tocarAlarme = useCallback(() => {
+    if (!somAtivado) return
+    
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0
+      audioRef.current.play().catch(e => console.error('Erro ao tocar alarme:', e))
+    }
+  }, [somAtivado])
+
+  // Iniciar temporizador
+  const iniciarTemporizador = useCallback(() => {
+    if (!hiperfocoSelecionadoId) return
+    
+    setTemporizadorAtivo(true)
+    
+    timerRef.current = setInterval(() => {
+      setTempoRestante(prev => {
+        if (prev <= 1) {
+          // Temporizador chegou a zero
+          tocarAlarme()
+          pararTemporizador()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+  }, [hiperfocoSelecionadoId, tocarAlarme, pararTemporizador])
   
   // Lidar com a seleção de hiperfoco
   useEffect(() => {
@@ -39,7 +77,7 @@ export function TemporizadorFoco() {
     if (temporizadorAtivo) {
       pararTemporizador()
     }
-  }, [hiperfocoSelecionadoId, hiperfocos])
+  }, [hiperfocoSelecionadoId, hiperfocos, temporizadorAtivo, pararTemporizador])
   
   // Limpar timer ao desmontar componente
   useEffect(() => {
@@ -58,74 +96,36 @@ export function TemporizadorFoco() {
     };
   }, [tempoRestante, temporizadorAtivo]);
   
-  // Iniciar temporizador
-  const iniciarTemporizador = () => {
-    if (!hiperfocoSelecionadoId) return
-    
-    setTemporizadorAtivo(true)
-    
-    timerRef.current = setInterval(() => {
-      setTempoRestante(prev => {
-        if (prev <= 1) {
-          // Temporizador chegou a zero
-          tocarAlarme()
-          pararTemporizador()
-          return 0
-        }
-        return prev - 1
-      })
-    }, 1000)
-  }
-  
-  // Parar temporizador
-  const pararTemporizador = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current)
-      timerRef.current = null
-    }
-    setTemporizadorAtivo(false)
-  }
-  
   // Pausar/Resumir temporizador
-  const toggleTemporizador = () => {
+  const toggleTemporizador = useCallback(() => {
     if (temporizadorAtivo) {
       pararTemporizador()
     } else {
       iniciarTemporizador()
     }
-  }
+  }, [temporizadorAtivo, pararTemporizador, iniciarTemporizador])
   
   // Reiniciar temporizador
-  const reiniciarTemporizador = () => {
+  const reiniciarTemporizador = useCallback(() => {
     pararTemporizador()
     setTempoRestante(tempoTotal)
-  }
-  
-  // Tocar som de alarme
-  const tocarAlarme = () => {
-    if (!somAtivado) return
-    
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0
-      audioRef.current.play().catch(e => console.error('Erro ao tocar alarme:', e))
-    }
-  }
+  }, [pararTemporizador, tempoTotal])
   
   // Formatar tempo para exibição (minutos:segundos)
-  const formatarTempo = (segundos: number) => {
+  const formatarTempo = useCallback((segundos: number) => {
     const mins = Math.floor(segundos / 60)
     const segs = segundos % 60
     return `${mins.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`
-  }
+  }, [])
   
   // Calcular percentual de progresso
-  const calcularProgresso = () => {
+  const calcularProgresso = useCallback(() => {
     if (tempoTotal === 0) return 0
     return ((tempoTotal - tempoRestante) / tempoTotal) * 100
-  }
+  }, [tempoTotal, tempoRestante])
   
   // Configurar tempo personalizado
-  const definirTempoPersonalizado = () => {
+  const definirTempoPersonalizado = useCallback(() => {
     const minutos = parseInt(tempoPersonalizado)
     if (isNaN(minutos) || minutos <= 0) return
     
@@ -135,14 +135,14 @@ export function TemporizadorFoco() {
     setTempoRestante(segundos)
     setTempoPausa(Math.floor(segundos * 0.1)) // 10% do tempo para pausas
     setTempoPersonalizado('')
-  }
+  }, [tempoPersonalizado, pararTemporizador])
   
   // Iniciar tempo de pausa
-  const iniciarPausa = () => {
+  const iniciarPausa = useCallback(() => {
     pararTemporizador()
     setTempoRestante(tempoPausa)
     setTempoTotal(tempoPausa)
-  }
+  }, [tempoPausa, pararTemporizador])
   
   return (
     <div>
